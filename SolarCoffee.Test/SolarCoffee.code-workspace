@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../SolarCoffee.Web"
+		},
+		{
+			"path": "../SolarCoffee.Services"
+		},
+		{
+			"path": "../SolarCoffee.Data"
+		}
+	],
+	"settings": {}
+}
