@@ -5,11 +5,11 @@ using SolarCoffee.Data.Modules;
 
 namespace SolarCoffee.Data
 {
-    public class SolarDBContext : IdentityDbContext
+    public class SolarDbContext : IdentityDbContext
     {
-        public SolarDBContext(){}
+        public SolarDbContext(){}
 
-        public SolarDBContext(DbContextOptions options) : base(options) {}
+        public SolarDbContext(DbContextOptions options) : base(options) {}
 
         public virtual DbSet<Customer> Customers{ get; set; }
         public virtual DbSet<CustomerAdress> CustomerAdresses{ get; set; }
