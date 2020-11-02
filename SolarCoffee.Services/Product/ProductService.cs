@@ -1,24 +1,24 @@
 using System.Collections.Generic;
 using System.Linq;
-using SolarCoffe.Data;
-using SolarCoffe.Data.Modules;
+using SolarCoffee.Data;
+using SolarCoffee.Data.Modules;
 using System;
 
-namespace SolarCoffe.Services.Product {
+namespace SolarCoffee.Services.Product {
     public class ProductService : IProductService {
         private readonly SolarDbContext _db;
 
         public ProductService(SolarDbContext db){
             _db = db;
         }
-        List<Product> GetAllProducts(){
+        public List<Data.Modules.Product> GetAllProducts(){
             return _db.Products.ToList();
         }
-        Product GetProductById(int id){
+        public Data.Modules.Product GetProductById(int id){
             return _db.Products.Find(id);
 
         }
-        ServiceResponse<Product> CreateProduct(Product product){
+        public ServiceResponse<Data.Modules.Product> CreateProduct(Data.Modules.Product product){
             try{
                 _db.Products.Add(product);
                 
@@ -29,9 +29,9 @@ namespace SolarCoffe.Services.Product {
                 };
                 _db.ProductInventories.Add(newInventory);
 
-                _db.SafeChanges();
+                _db.SaveChanges();
 
-                return new ServiceResponse<Product>{
+                return new ServiceResponse<Data.Modules.Product>{
                     Data = product,
                     Time = DateTime.UtcNow,
                     IsSuccess = true,
@@ -39,7 +39,7 @@ namespace SolarCoffe.Services.Product {
                 };
             }
             catch(Exception e){
-                return new ServiceResponse<Product>{
+                return new ServiceResponse<Data.Modules.Product>{
                     Data = product,
                     Time = DateTime.UtcNow,
                     IsSuccess = false,
@@ -48,13 +48,13 @@ namespace SolarCoffe.Services.Product {
             }
         }
 
-        ServiceResponse<Product> ArchiveProduct(int id){
+        public ServiceResponse<Data.Modules.Product> ArchiveProduct(int id){
             try{
                 var product = _db.Products.Find(id);
                 product.IsArchived.set(true);
                 _db.SaveChanges();
                 
-                return new ServiceResponse<Product>{
+                return new ServiceResponse<Data.Modules.Product>{
                     Data = product,
                     Time = DataTime.UtcNow,
                     IsSuccess = true,
@@ -63,14 +63,13 @@ namespace SolarCoffe.Services.Product {
                 };
             }
             catch(Exception e) {
-                    return new ServiceResponse<Product>{
+                    return new ServiceResponse<Data.Modules.Product>{
                     Data = null,
                     Time = DataTime.UtcNow,
                     IsSuccess = false,
                     Message = e.StackTrace
                 
                 };
-            }
             }
         }
     }

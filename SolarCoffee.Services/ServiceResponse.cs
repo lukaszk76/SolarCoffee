@@ -1,7 +1,7 @@
 using System;
 
-namespace SolarCoffe.Services {
-    public class ServiceReponse{
+namespace SolarCoffee.Services.Product {
+    public class ServiceReponse<T>{
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
         public DateTime Time { get; set; }
