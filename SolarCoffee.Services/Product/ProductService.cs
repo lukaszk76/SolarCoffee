@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SolarCoffee.Data;
-using SolarCoffee.Data.Modules;
+using SolarCoffee.Data.Models;
 using System;
 
 namespace SolarCoffee.Services.Product {
@@ -11,14 +11,14 @@ namespace SolarCoffee.Services.Product {
         public ProductService(SolarDbContext db){
             _db = db;
         }
-        public List<Data.Modules.Product> GetAllProducts(){
+        public List<Data.Models.Product> GetAllProducts(){
             return _db.Products.ToList();
         }
-        public Data.Modules.Product GetProductById(int id){
+        public Data.Models.Product GetProductById(int id){
             return _db.Products.Find(id);
 
         }
-        public ServiceResponse<Data.Modules.Product> CreateProduct(Data.Modules.Product product){
+        public ServiceResponse<Data.Models.Product> CreateProduct(Data.Models.Product product){
             try{
                 _db.Products.Add(product);
                 
@@ -31,7 +31,7 @@ namespace SolarCoffee.Services.Product {
 
                 _db.SaveChanges();
 
-                return new ServiceResponse<Data.Modules.Product>{
+                return new ServiceResponse<Data.Models.Product>{
                     Data = product,
                     Time = DateTime.UtcNow,
                     IsSuccess = true,
@@ -39,7 +39,7 @@ namespace SolarCoffee.Services.Product {
                 };
             }
             catch(Exception e){
-                return new ServiceResponse<Data.Modules.Product>{
+                return new ServiceResponse<Data.Models.Product>{
                     Data = product,
                     Time = DateTime.UtcNow,
                     IsSuccess = false,
@@ -48,24 +48,24 @@ namespace SolarCoffee.Services.Product {
             }
         }
 
-        public ServiceResponse<Data.Modules.Product> ArchiveProduct(int id){
+        public ServiceResponse<Data.Models.Product> ArchiveProduct(int id){
             try{
                 var product = _db.Products.Find(id);
-                product.IsArchived.set(true);
+                product.IsArchived = true;
                 _db.SaveChanges();
                 
-                return new ServiceResponse<Data.Modules.Product>{
+                return new ServiceResponse<Data.Models.Product>{
                     Data = product,
-                    Time = DataTime.UtcNow,
+                    Time = DateTime.UtcNow,
                     IsSuccess = true,
                     Message = "the product was archived"
                 
                 };
             }
             catch(Exception e) {
-                    return new ServiceResponse<Data.Modules.Product>{
+                    return new ServiceResponse<Data.Models.Product>{
                     Data = null,
-                    Time = DataTime.UtcNow,
+                    Time = DateTime.UtcNow,
                     IsSuccess = false,
                     Message = e.StackTrace
                 

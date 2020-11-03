@@ -1,4 +1,4 @@
-namespace SolarCoffee.Data.Modules {
+namespace SolarCoffee.Data.Models {
     public class SalesOrderItem{
         public int Id {get; set;}
         public int Quantity {get; set;}

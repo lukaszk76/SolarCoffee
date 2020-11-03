@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SolarCoffee.Data.Modules;
+using SolarCoffee.Data.Models;
 
 namespace SolarCoffee.Data
 {

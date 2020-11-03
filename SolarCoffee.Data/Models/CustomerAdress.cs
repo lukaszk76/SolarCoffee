@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SolarCoffee.Data.Modules {
+namespace SolarCoffee.Data.Models {
     public class CustomerAdress {
         public int Id { get; set; }
         public DateTime CreatedOn {get; set; }

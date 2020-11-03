@@ -11,7 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SolarCoffee.Data;
-using SolarCoffe.Services;
+using SolarCoffee.Services;
+using SolarCoffee.Services.Product;
 using Microsoft.EntityFrameworkCore;
 
 namespace SolarCoffee.Web

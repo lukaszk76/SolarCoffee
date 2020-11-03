@@ -1,6 +1,6 @@
 using System;
 
-namespace SolarCoffee.Data.Modules {
+namespace SolarCoffee.Data.Models {
     public class ProductInventorySnapshot{
         public int Id { get; set; }
         public DateTime SnapshotTime {get; set; }
