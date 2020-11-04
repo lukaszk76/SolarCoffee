@@ -5,6 +5,7 @@ using SolarCoffee.Data;
 using System;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SolarCoffee.Services.Inventory {
     public class InventoryService : IInventoryService {
@@ -63,10 +64,10 @@ namespace SolarCoffee.Services.Inventory {
         public List<ProductInventorySnapshot> GetSnapshotHistory(){
             var earliest = DateTime.UtcNow - TimeSpan.FromHours(6);
             
-            return _db.ProductInventories
-                .Include(inv => inv.Product)
-                .Where(inv => inv.SnapshotTime > earliest 
-                                && !inv.Product.IsArchived)
+            return _db.ProductInventorySnapshots
+                .Include(snap => snap.Product)
+                .Where(snap => snap.SnapshotTime > earliest 
+                                && !snap.Product.IsArchived)
                 .ToList();
         }
 

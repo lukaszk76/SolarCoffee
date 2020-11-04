@@ -4,7 +4,7 @@ using System.Linq;
 using SolarCoffee.Data;
 using SolarCoffee.Data.Models;
 using System;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace SolarCoffee.Services.Customer {
     public class CustomerService : ICustomerService {

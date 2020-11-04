@@ -7,6 +7,7 @@ using System.Data;
 using SolarCoffee.Data;
 using System;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace SolarCoffee.Services.Order{
     public class OrderService : IOrderService{

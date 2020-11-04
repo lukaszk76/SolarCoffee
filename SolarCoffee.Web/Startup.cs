@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using SolarCoffee.Data;
 using SolarCoffee.Services;
 using SolarCoffee.Services.Product;
+using SolarCoffee.Services.Inventory;
+using SolarCoffee.Services.Customer;
+using SolarCoffee.Services.Order;
 using Microsoft.EntityFrameworkCore;
 
 namespace SolarCoffee.Web
