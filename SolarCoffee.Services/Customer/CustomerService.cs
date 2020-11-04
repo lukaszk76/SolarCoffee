@@ -20,7 +20,7 @@ namespace SolarCoffee.Services.Customer {
                 .ToList();
         }
         public Data.Models.Customer GetCustomerById(int id) {
-            return _db.Cusomers.Find(id);
+            return _db.Customers.Find(id);
         } 
         public ServiceResponse<Data.Models.Customer> CreateCustomer(Data.Models.Customer customer){
             try {
@@ -54,7 +54,7 @@ namespace SolarCoffee.Services.Customer {
             } 
 
             try {
-                _db.Cusomers.Remove(customer);
+                _db.Customers.Remove(customer);
                 _db.SaveChanges();
                 return new ServiceResponse<bool>{
                     IsSuccess = true,

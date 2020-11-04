@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using SolarCoffee.Data.Models;
 using SolarCoffee.Services.Product;
-using System.Linq;
 using SolarCoffee.Data;
 using System;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
-namespace SolarCoffe.Services.Inventory {
+namespace SolarCoffee.Services.Inventory {
     public class InventoryService : IInventoryService {
         private readonly SolarDbContext _db;
         private readonly ILogger<InventoryService> _logger;
@@ -29,37 +29,55 @@ namespace SolarCoffe.Services.Inventory {
                 inventory.QuantityOnHand += adjustment;
 
                 try {
-                    CreateSnapshot();
+                    CreateSnapshot(inventory);
                 } catch (Exception e){
                     _logger.LogError("Error creating inventory snapshot");
                     _logger.LogError(e.StackTrace);
                 }
 
-
                 _db.SaveChanges();
+
                 return new ServiceResponse<Data.Models.ProductInventory>{
                     IsSuccess = true,
                     Message = $"Product {id} inventory adjusted",
                     Time = DateTime.UtcNow,
                     Data = inventory
                 };
+
             } catch (Exception e) {
                 return new ServiceResponse<Data.Models.ProductInventory>{
                     IsSuccess = false,
-                    Message = "Error while updating the inventory",
+                    Message = e.StackTrace,
                     Time = DateTime.UtcNow,
                     Data = null
                 };
             }
         }
         public ProductInventory GetInventoryByProductId(int id){
-
+            return _db.ProductInventories
+                .Include(inv => inv.Product)
+                .FirstOrDefault(inv => inv.Product.Id == id);
         }
-        public void CreateSnapshot(){
-
-        }
+        
+        //returns a history of product inventory snapshots for last 6 hours and for products which are not archived
         public List<ProductInventorySnapshot> GetSnapshotHistory(){
+            var earliest = DateTime.UtcNow - TimeSpan.FromHours(6);
+            
+            return _db.ProductInventories
+                .Include(inv => inv.Product)
+                .Where(inv => inv.SnapshotTime > earliest 
+                                && !inv.Product.IsArchived)
+                .ToList();
+        }
 
+        private void CreateSnapshot(ProductInventory inventory){
+        
+            var snapshot = new ProductInventorySnapshot{
+                SnapshotTime = DateTime.UtcNow,
+                QuantityOnHand = inventory.QuantityOnHand,
+                Product = inventory.Product
+            };
+            _db.ProductInventorySnapshots.Add(snapshot);
         }
     }
-}
+} 
